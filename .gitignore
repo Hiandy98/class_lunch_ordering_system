@@ -1,10 +1,15 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+# --- Python / Backend ---
+backend/.venv/
+backend/__pycache__/
+backend/*.py[cod]
+backend/build/
+backend/dist/
+backend/*.egg-info/
 
-# Virtual environments
-.venv
+# --- OS / IDE ---
+.vscode/
+
+# --- Virtual Environments (通用) ---
+.venv/
+venv/
+ENV/
