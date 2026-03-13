@@ -13,3 +13,5 @@ backend/*.egg-info/
 .venv/
 venv/
 ENV/
+
+logs/

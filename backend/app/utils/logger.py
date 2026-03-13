@@ -116,7 +116,7 @@ class Logger:
                 logging.debug("--- [Logging Configs] ---")
                 for key, value in asdict(params).items():
                     if key not in ignore:
-                        logging.debug(f"{key:25}: {value}")
+                        logging.debug("%25s: %s", key, value)
                 logging.debug("-------------------------")
         
             Logger._is_init = True
