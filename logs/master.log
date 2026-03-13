@@ -1,0 +1,126 @@
+INFO     (2026/03/13 20:10:29): [logger.py] (Line: 105) 
+==================================================
+############### START NEW SESSION ################
+==================================================
+
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 116) --- [Logging Configs] ---
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) do_session_log           : True
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) do_master_log            : True
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) do_console_log           : True
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) do_end_marking           : True
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) do_start_marking         : True
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) do_force_end_marking     : True
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) is_colorful_console      : True
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) add_init_info            : True
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) formatter                : %(levelname)-8s (%(asctime)s): [%(filename)s] (Line: %(lineno)d) %(message)s
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) dateformatter            : %Y/%m/%d %H:%M:%S
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) master_log_maxbyte       : 5242880
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) master_log_maxbackup     : 3
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) logging_level            : DEBUG
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 119) log_dir                  : logs
+DEBUG    (2026/03/13 20:10:29): [logger.py] (Line: 120) -------------------------
+INFO     (2026/03/13 20:10:29): [logger.py] (Line: 123) 日誌系統已在線程保護下完成初始化。
+DEBUG    (2026/03/13 20:10:29): [main.py] (Line: 19) test
+INFO     (2026/03/13 20:10:29): [main.py] (Line: 20) test
+WARNING  (2026/03/13 20:10:29): [main.py] (Line: 21) test
+ERROR    (2026/03/13 20:10:29): [main.py] (Line: 22) test
+CRITICAL (2026/03/13 20:10:29): [main.py] (Line: 23) test
+INFO     (2026/03/13 20:10:29): [logger.py] (Line: 190) 
+- - - - - - - - - - - - - - - - - - - - - - - - -
+~~~~~~~~~~~~~~~ PROGRAM TERMINATED ~~~~~~~~~~~~~~~
+- - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
+INFO     (2026/03/13 20:11:55): [logger.py] (Line: 105) 
+==================================================
+############### START NEW SESSION ################
+==================================================
+
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 116) --- [Logging Configs] ---
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) do_session_log           : True
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) do_master_log            : True
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) do_console_log           : True
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) do_end_marking           : True
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) do_start_marking         : True
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) do_force_end_marking     : True
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) is_colorful_console      : True
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) add_init_info            : True
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) formatter                : %(levelname)-8s (%(asctime)s): [%(filename)s] (Line: %(lineno)d) %(message)s
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) dateformatter            : %Y/%m/%d %H:%M:%S
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) master_log_maxbyte       : 5242880
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) master_log_maxbackup     : 3
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) logging_level            : DEBUG
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 119) log_dir                  : logs
+DEBUG    (2026/03/13 20:11:55): [logger.py] (Line: 120) -------------------------
+INFO     (2026/03/13 20:11:55): [logger.py] (Line: 123) 日誌系統已在線程保護下完成初始化。
+INFO     (2026/03/13 20:11:55): [logger.py] (Line: 190) 
+- - - - - - - - - - - - - - - - - - - - - - - - -
+~~~~~~~~~~~~~~~ PROGRAM TERMINATED ~~~~~~~~~~~~~~~
+- - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
+INFO     (2026/03/13 20:13:07): [logger.py] (Line: 105) 
+==================================================
+############### START NEW SESSION ################
+==================================================
+
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 116) --- [Logging Configs] ---
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) do_session_log           : True
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) do_master_log            : True
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) do_console_log           : True
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) do_end_marking           : True
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) do_start_marking         : True
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) do_force_end_marking     : True
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) is_colorful_console      : True
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) add_init_info            : True
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) formatter                : %(levelname)-8s (%(asctime)s): [%(filename)s] (Line: %(lineno)d) %(message)s
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) dateformatter            : %Y/%m/%d %H:%M:%S
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) master_log_maxbyte       : 5242880
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) master_log_maxbackup     : 3
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) logging_level            : DEBUG
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 119) log_dir                  : logs
+DEBUG    (2026/03/13 20:13:07): [logger.py] (Line: 120) -------------------------
+INFO     (2026/03/13 20:13:07): [logger.py] (Line: 123) 日誌系統已在線程保護下完成初始化。
+INFO     (2026/03/13 20:13:07): [logger.py] (Line: 190) 
+- - - - - - - - - - - - - - - - - - - - - - - - -
+~~~~~~~~~~~~~~~ PROGRAM TERMINATED ~~~~~~~~~~~~~~~
+- - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
+INFO     (2026/03/13 20:14:55): [logger.py] (Line: 105) 
+==================================================
+############### START NEW SESSION ################
+==================================================
+
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 116) --- [Logging Configs] ---
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) do_session_log           : True
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) do_master_log            : True
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) do_console_log           : True
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) do_end_marking           : True
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) do_start_marking         : True
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) do_force_end_marking     : True
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) is_colorful_console      : True
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) add_init_info            : True
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) formatter                : %(levelname)-8s (%(asctime)s): [%(filename)s] (Line: %(lineno)d) %(message)s
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) dateformatter            : %Y/%m/%d %H:%M:%S
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) master_log_maxbyte       : 5242880
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) master_log_maxbackup     : 3
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) logging_level            : DEBUG
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 119) log_dir                  : logs
+DEBUG    (2026/03/13 20:14:55): [logger.py] (Line: 120) -------------------------
+INFO     (2026/03/13 20:14:55): [logger.py] (Line: 123) 日誌系統已在線程保護下完成初始化。
+INFO     (2026/03/13 20:14:55): [main.py] (Line: 20) Hello from class-lunch-ordering-system V0.0-Beta
+INFO     (2026/03/13 20:14:55): [logger.py] (Line: 190) 
+- - - - - - - - - - - - - - - - - - - - - - - - -
+~~~~~~~~~~~~~~~ PROGRAM TERMINATED ~~~~~~~~~~~~~~~
+- - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
