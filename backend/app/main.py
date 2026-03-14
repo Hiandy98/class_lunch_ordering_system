@@ -10,9 +10,9 @@ def main():
         Goal: 一個班級的訂餐系統 在此輸出後端運行日誌
         """,
         logging_level="DEBUG",
-        do_session_log= True,
+        do_session_log= False,
         do_console_log= True,
-        do_master_log = True,
+        do_master_log = False,
     )
 
     Logger.init(log_params)
