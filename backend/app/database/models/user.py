@@ -10,4 +10,7 @@ class User(SQLModel, table=True):
     role: str = Field(default="student")
     total_debt: int = Field(default=0)
     total_paid: int = Field(default=0)
-    created_at: Optional[datetime] = Field(default=None)
+    created_at: Optional[datetime] = Field(
+        default=None,
+        sa_column_kwargs={"server_default": text("now()")}
+    )

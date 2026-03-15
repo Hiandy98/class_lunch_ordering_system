@@ -2,7 +2,7 @@ import os
 import sys
 import logging
 from sqlmodel import create_engine, Session
-from sqlalchemy.exc import ArgumentError
+from sqlalchemy.exc import ArgumentError, OperationalError, ProgrammingError
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -28,14 +28,20 @@ def connect_check():
     try:
         with engine.connect():
             logging.info("資料庫連線測試成功！")
+    except OperationalError as e:
+        logging.critical(f"無法連線（網路/認證問題）: {e}")
+        sys.exit(1)
+    except ProgrammingError as e:
+        logging.critical(f"權限或資料庫名稱錯誤: {e}")
+        sys.exit(1)
     except Exception as e:
-        logging.critical(f"無法連線至資料庫，請檢查伺服器或憑證: {e}")
+        logging.critical(f"發生未預期的資料庫錯誤: {e}")
         sys.exit(1)
 
 # 取得Session方法
 def get_session():
     """
-    每次調用時，會從 engine (連線池) 中取出一個 Session。
+    每次調用時，會從 engine 連線池中取出一個 Session。
     """
     with Session(engine) as session:
         yield session

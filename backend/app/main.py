@@ -24,6 +24,12 @@ def main():
 
     logging.info("Hello from class-lunch-ordering-system V0.0-Beta")
 
+    # from lab.db_connent_test1 import test_user_operations
+    # try:
+    #     test_user_operations()
+    # except Exception as e:
+    #     print(f"s發生錯誤：{e}")
+
     
 
 if __name__ == "__main__":

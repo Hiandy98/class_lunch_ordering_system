@@ -1,3 +1,3 @@
-from models.user import User
-from models.store import Store
-from models.order import Order
+from database.models.user import User
+from database.models.store import Store
+from database.models.order import Order
