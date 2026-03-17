@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from api.v1.stores.list import router as store_list_router
+from app.api.v1.stores.list import router as store_list_router
 
 store_router = APIRouter()
 
