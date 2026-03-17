@@ -83,9 +83,29 @@ class Logger:
             if Logger._is_init:
                 return
             
+            target_level = getattr(logging, params.logging_level.upper(), logging.INFO)
+            
+            logging.basicConfig(level=target_level, force=True)
+            root = logging.getLogger()
+            root.setLevel(target_level)
+            root.handlers.clear()
+
+            # 統一所有模塊的Level
+            for logger_name in logging.root.manager.loggerDict:
+                sub_logger = logging.getLogger(logger_name)
+                # 確保它是真正的 Logger 物件
+                if isinstance(sub_logger, logging.Logger):
+                    sub_logger.setLevel(target_level)
+                    sub_logger.propagate = True
+
+            # 掛載
+            formatter = logging.Formatter(params.formatter, datefmt=params.dateformatter)
+
+            
             formatter = logging.Formatter(params.formatter, datefmt=params.dateformatter)
             root = logging.getLogger()
             root.setLevel(getattr(logging, params.logging_level.upper(), logging.INFO))
+            
             if root.hasHandlers():
                 root.handlers.clear()
 
