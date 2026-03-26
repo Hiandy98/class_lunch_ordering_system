@@ -16,6 +16,6 @@ router = APIRouter()
 async def get_all_store(db: AsyncSession = Depends(get_session)):
     statement = select(Store)
     select_result = await db.execute(statement)
-    stores = select_result.all()
+    stores = select_result.scalars().all()
     logging.info(f"已取得所有商店，共{len(stores)}筆資料")
     return stores

@@ -17,7 +17,7 @@ async def get_all_order(db: AsyncSession = Depends(get_session)):
     logging.debug("正在嘗試取得資料")
     statement = select(Order)
     select_results = await db.execute(statement)
-    orders = select_results.all()
+    orders = select_results.scalars().all()
     logging.info(f"已取得所有商店，共{len(orders)}筆資料")
     return orders
 
