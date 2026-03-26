@@ -18,20 +18,20 @@ log_params = LoggerParameter(
 )
 
 
-def main():
+async def start_up():
     Logger.init(log_params)
     
     logging.info("進行連線測試")
     from app.database.session import connect_check
-    connect_check()
+    await connect_check()
     
     logging.info("Hello from class-lunch-ordering-system V0.0-Beta")
 
 
-# 防止啟動後跟不上伺服器 在uvicorn控制中啟動main()函式
+# 防止啟動後跟不上伺服器 在uvicorn控制中啟動起始運行函式
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    main()
+    await start_up()
     yield
 
 
@@ -40,7 +40,7 @@ app = FastAPI(title="Test", lifespan=lifespan)
 app.include_router(api_v1_router)
 
 @app.get("/")
-def root():
+async def root():
     return {"message": "Success"}
 
 
