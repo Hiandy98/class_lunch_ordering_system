@@ -17,7 +17,8 @@ class Store(SQLModel, table=True):
     )
     name: Optional[str] = Field(default=None)
     menu_url: Optional[List[str]] = Field(default_factory=list, sa_column=Column(ARRAY(String)))
-    is_active: bool = Field(default=True)
+    is_today_store: bool = Field(default=False)
+    is_active: bool = Field(default=False)
     deadline: Optional[datetime] = Field(default=None)
     created_at: Optional[datetime] = Field(
         default=None,
