@@ -13,7 +13,7 @@ load_dotenv()
 # 檢查環境變數
 database_url = os.getenv("DATABASE_URL")
 if not database_url:
-    logging.critical("❌ 環境變數 DATABASE_URL 缺失！")
+    logging.critical("環境變數 DATABASE_URL 缺失！")
     sys.exit(1)
 
 # 非同步 Engine
