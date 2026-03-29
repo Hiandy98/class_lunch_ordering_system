@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 from uuid import UUID
 
@@ -5,5 +6,7 @@ class AllStore(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: UUID
     name: str
-    # 其餘愈傳遞參數
+    is_today_store: bool
+    is_active: bool
+    deadline: datetime
     ...
