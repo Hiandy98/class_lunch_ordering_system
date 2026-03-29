@@ -1,3 +1,7 @@
+# Route: GET /api/v1/auth/login
+# Desc: 進行登入驗證
+# ------------------------------------------------------------
+
 import logging
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status, Response
@@ -44,8 +48,9 @@ async def account_verify(user: str ,password: str,
 async def login(response: Response, remember_me: bool = False, user_account: User = Depends(account_verify)):
     user_id = user_account.student_id
     username = user_account.display_name
+    role = user_account.role
     expire = timedelta(days=REMEMBER_ME_EXPIRE_DAYS)
-    token = create_access_token(user_id, username, expire)
+    token = create_access_token(user_id, username, role ,expire)
 
     cookies_age = REMEMBER_ME_EXPIRE_DAYS * 86400 if remember_me else None
     response.set_cookie(

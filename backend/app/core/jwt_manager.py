@@ -17,25 +17,27 @@ DEFAULT_EXPIRE_MINUTES = 30
 REMEMBER_ME_EXPIRE_DAYS = 14
 
 
-def create_access_token(user_id: str, display_name: str, expires_delta: timedelta):
+def create_access_token(user_id: str, display_name: str, role: str ,expires_delta: timedelta):
     payload = {
         "sub": user_id,
         "name": display_name,
+        "role": role,
         "exp": datetime.now(timezone.utc) + expires_delta
     }
     return jwt.encode(payload, JWT_KEY, algorithm=ALGORITHM)
 
-def decode_jwt(jwt_code: str = Cookie(None)):
-    if not jwt_code:
+def decode_jwt(access_token: str = Cookie(None)):
+    if not access_token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="請重新登入，目前無憑證或已過期"
         )
     try:
-        payload = jwt.decode(jwt_code, JWT_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(access_token, JWT_KEY, algorithms=[ALGORITHM])
         
         user_id = payload.get("sub")
         display_name = payload.get("name")
+        role = payload.get("role")
 
         if not user_id:
             raise HTTPException(
@@ -46,7 +48,8 @@ def decode_jwt(jwt_code: str = Cookie(None)):
         
         return {
             "user_id": user_id,
-            "display_name": display_name
+            "display_name": display_name,
+            "role": role
         }
 
     except jwt.ExpiredSignatureError:
