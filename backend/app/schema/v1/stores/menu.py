@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ConfigDict
+from typing import List
 
-class Logout(BaseModel):
+class Menu(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    state: str
+    menu_url: List[str]
