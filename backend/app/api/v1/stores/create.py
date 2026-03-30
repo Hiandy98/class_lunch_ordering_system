@@ -11,7 +11,7 @@ from app.schema.v1.stores.create import Create, StoreCreate
 
 router = APIRouter()
 
-@router.post("/create", response_model=Create)
+@router.post("/create", response_model=Create, status_code=status.HTTP_201_CREATED)
 async def get_all_store(payload: StoreCreate,
                         db: AsyncSession = Depends(get_session)):
     logging.debug("新增餐廳操作")
