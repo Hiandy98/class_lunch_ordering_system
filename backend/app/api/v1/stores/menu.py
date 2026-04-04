@@ -14,7 +14,7 @@ from app.schema.v1.stores.menu import Menu
 router = APIRouter()
 
 @router.get("/{store_id}/menu", response_model=Menu)
-async def get_all_store(store_id: UUID, db: AsyncSession = Depends(get_session)):
+async def get_all_menu(store_id: UUID, db: AsyncSession = Depends(get_session)):
     statement = select(Store.menu_url).where(col(Store.id) == store_id)
     select_result = await db.execute(statement)
     menus = select_result.scalar_one_or_none()

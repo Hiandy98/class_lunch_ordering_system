@@ -15,7 +15,7 @@ from app.schema.v1.stores.orders import StoreOrders
 router = APIRouter()
 
 @router.get("/{store_id}/orders", response_model=List[StoreOrders])
-async def get_all_store(store_id: UUID, db: AsyncSession = Depends(get_session)):
+async def get_store_orders(store_id: UUID, db: AsyncSession = Depends(get_session)):
     statement = select(Order).where(col(Order.store_id) == store_id)
     select_result = await db.execute(statement)
     orders = select_result.scalars().all()
