@@ -19,5 +19,5 @@ async def get_all_store(store_id: UUID, db: AsyncSession = Depends(get_session))
     statement = select(Order).where(col(Order.store_id) == store_id)
     select_result = await db.execute(statement)
     orders = select_result.scalars().all()
-    logging.debug(f"已取得{store_id}的菜單資料")
+    logging.debug(f"已取得{store_id}的訂單資料")
     return orders
