@@ -14,7 +14,7 @@ from uuid import UUID
 router = APIRouter()
 
 @router.patch("/cancel")
-async def create_order(id: UUID, account = Depends(verify_token),
+async def cancel_order(id: UUID, account = Depends(verify_token),
                         db: AsyncSession = Depends(get_session)):
     statement = select(Order).where(col(Order.id) == id)
     result = await db.execute(statement)

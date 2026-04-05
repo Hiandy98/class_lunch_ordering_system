@@ -1,6 +1,7 @@
 import logging
 from app.utils.logger import LoggerParameter, Logger
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.api.v1 import api_v1_router
 
@@ -38,6 +39,21 @@ async def lifespan(app: FastAPI):
 # FastAPI 設定區域
 app = FastAPI(title="Test", lifespan=lifespan)
 app.include_router(api_v1_router)
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5500",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def root():
