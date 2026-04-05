@@ -18,7 +18,7 @@ class Order(SQLModel, table=True):
     store_id: UUID = Field(foreign_key="stores.id")
     content: List[Dict[str, Any]] = Field(default_factory=list, sa_type=JSONB)
     total_price: int = Field(default=0)
-    is_paid: bool = Field(default=False)
+    is_active: bool = Field(default=False)
     created_at: Optional[datetime] = Field(
         default=None,
         sa_column_kwargs={"server_default": text("now()")}
