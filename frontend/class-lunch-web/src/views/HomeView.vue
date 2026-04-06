@@ -6,7 +6,7 @@
 		<div class="main-container" :style="containerStyle">
 			<h1 class="logo-text">LunchBox</h1>
 			<p class="system-desc">KSHS108-訂餐管理系統</p>
-			<button class="login-btn" @click="goToSystem()">登 入 系 統</button>
+			<button class="login-btn" @click="goToSystem()">進入系統</button>
 			<button class="forget-pwd">忘記密碼?</button>
 		</div>
 
@@ -56,7 +56,7 @@
 				return;
 			}
 			const status = error.response.status;
-
+			
 			if (status === 401) {
 					// 401 Unauthorized: 無憑證或已過期
 					console.warn('身分驗證失敗，導向登入頁');
@@ -70,7 +70,7 @@
 					return;
 			}
 
-		// 其他錯誤碼 (如 403, 404, 500)
+		// 其他錯誤碼
 			console.error(`發生錯誤：${status}`, error.response.data);
 		}
 	};
@@ -156,6 +156,7 @@
 
 	.login-btn {
 		background: var(--primary-orange);
+		letter-spacing: 10px;
 		color: white;
 		text-decoration: none;
 		display: inline-block;

@@ -31,7 +31,7 @@
 				</el-checkbox>
 			</div>
 			<p :style="{ color: textColor }" class="err-msg">{{ err_message }}</p>
-			<el-button type="primary" round class="login-btn" @click="handle_login()">Login</el-button>
+			<el-button :loading="loading" type="primary" round class="login-btn" @click="handle_login()">Login</el-button>
 		</div>
   </div>
 
@@ -50,16 +50,37 @@
 	const loading = ref(false)
 	const err_message = ref<string>('');
 	const textColor = ref<string>('red');
-	const remember_me = ref(true)
+	const remember_me = ref(true);
+	const can_use = ref<boolean>(true);
+
+	function err_msg(msg: string): void {
+		setTimeout(() => {
+			err_message.value = "";
+		}, 5000);
+		textColor.value = 'red';
+		err_message.value = msg;
+	};
 
 	const handle_login = async () => {
-		if (!user_input.value || !pwd_input.value) {
-			err_message.value = "請輸入帳號與密碼!";
+		if (!can_use.value) {
+			err_msg("請求過於頻繁，請稍後再試");
 			return;
 		}
 
+  	can_use.value = false;
+		err_message.value = "";
+
+		setTimeout(() => {
+        can_use.value = true;
+    }, 5000);
+
+		if (!user_input.value || !pwd_input.value) {
+			err_msg("請輸入帳號與密碼!");
+			return;
+		};
+
 		loading.value = true;
-		textColor.value = '#5effa1';
+		textColor.value = 'green';
 		err_message.value = "登入中..."
 
 		try {
@@ -74,7 +95,7 @@
 					},
 					withCredentials: true
 				}
-			)
+			);
 
 
 			if (response.data.state === '登入成功') {
@@ -84,12 +105,11 @@
 		} catch (error: any) {
 			if (!error.response) {
 				if (error.request) {
-					textColor.value = 'red';
-					err_message.value = '無法連線至伺服器，請檢查網路 (502/Network Error)';
+					err_msg('無法連線至伺服器');
 				} else {
 					console.error('請求設定錯誤', error.message);
 				}
-				return
+				return;
 			}
 
 			const status = error.response.status;
@@ -97,16 +117,13 @@
 
 			switch (status) {
 				case 401:
-					textColor.value = 'red';
-					err_message.value = detail || '帳號或密碼錯誤';
+					err_msg(detail || '帳號或密碼錯誤');
 					break;
 				case 502:
-					textColor.value = 'red';
-					err_message.value = '伺服器維護中 (502)，請稍後再試';
+					err_msg('伺服器維護中 (502)，請稍後再試');
 					break;
 				default:
-					textColor.value = 'red';
-					err_message.value = `系統錯誤 (${status})`;
+					err_msg(`系統錯誤 (${status})`);
 			}
 		} finally {
 			loading.value = false;
