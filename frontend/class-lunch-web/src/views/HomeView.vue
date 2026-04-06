@@ -2,16 +2,14 @@
 	<div class="decoration decor-1"></div>
 	<div class="decoration decor-2"></div>
 
-	<div class="main-container">
+	<div class="main-container" :style="containerStyle">
 		<h1 class="logo-text">LunchBox</h1>
 		<p class="system-desc">KSHS108-訂餐管理系統</p>
 		<button class="login-btn" @click="goToSystem()">登 入 系 統</button>
-		<a href="#" class="sub-link">忘記密碼？</a>
+		<button class="forget-pwd">忘記密碼?</button>
 	</div>
 
-	<div class="footer-info">
-		V0.0 Bate
-	</div>
+	<div class="footer-info">V0.0 Bate</div>
 </template>
 
 <script setup lang="ts">
@@ -31,6 +29,8 @@
 			alert('正在進入系統...');
 		}, 500);
 	};
+
+
 </script>
 
 <style>
@@ -41,12 +41,13 @@
 	}
 
 	body {
-		background: #ffd9ad; 
-		background: -webkit-linear-gradient(159deg, #ffd9ad, #d6eaff); 
+		background: #ffd9ad;
+		background: -webkit-linear-gradient(159deg, #ffd9ad, #d6eaff);
 		background: linear-gradient(159deg, #ffd9ad, #d6eaff);
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		align-items: flex-start;
+		padding-top: 20vh;
 		overflow: hidden;
 		position: relative;
 	}
@@ -54,6 +55,7 @@
 	/* 裝飾品區 */
 	.decoration {
 		position: absolute;
+		pointer-events: none;
 		border-radius: 50%;
 		z-index: 1;
 		filter: blur(60px);
@@ -136,22 +138,29 @@
 		transform: scale(0.95);
 	}
 
-	.sub-link {
+	.forget-pwd {
 		display: block;
-		margin-top: 25px;
+		margin: 25px auto 0;
 		color: var(--secondary-blue);
 		font-size: 14px;
 		text-decoration: none;
 		font-weight: 500;
+		background-color: transparent;
+		border: none;
+		transition: all 0.2s ease;
+	}
+
+	.forget-pwd:active {
+		font-size: small;
 	}
 
 	.footer-info {
 		position: absolute;
 		font-size: 12px;
 		color: #666;
-  	bottom: 20px;
-  	left: 50%;
-  	transform: translateX(-50%);
+  		bottom: 20px;
+  		left: 50%;
+  		transform: translateX(-50%);
 	}
 	
 </style>
