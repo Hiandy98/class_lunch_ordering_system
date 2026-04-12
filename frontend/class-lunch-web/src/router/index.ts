@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import StoreView from '@/views/StoresView.vue'
+import axios from 'axios'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,8 +21,28 @@ const router = createRouter({
       path: "/stores",
       name: "stores",
       component: StoreView,
+      //meta: { requiresAuth: true },
     },
   ],
 })
+
+router.beforeEach(async (to, from) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  if (!requiresAuth) {
+    return true;
+  }
+
+  try {
+    await axios.get('/api/v1/auth/verify', { withCredentials: true });
+    return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('JWT 驗證失敗:', error.response?.data?.detail || '請先登入');
+    }
+     return { name: 'login' };
+  }
+})
+
+
 
 export default router

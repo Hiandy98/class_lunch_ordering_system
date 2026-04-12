@@ -102,13 +102,17 @@
 				router.push('/stores');
 			}
 
-		} catch (error: any) {
+		} catch (error) {
+			if (!axios.isAxiosError(error)) {
+				return
+			}
 			if (!error.response) {
 				if (error.request) {
 					err_msg('無法連線至伺服器');
 				} else {
 					console.error('請求設定錯誤', error.message);
 				}
+				
 				return;
 			}
 
@@ -133,149 +137,150 @@
 
 
 <style scoped>
-	.body {
-		min-height: 100vh;
-		width: 100%;
-		box-sizing: border-box;
-		margin: 0;
-		background: #ffd9ad;
-		background: -webkit-linear-gradient(159deg, #ffd9ad, #d6eaff);
-		background: linear-gradient(159deg, #ffd9ad, #d6eaff);
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
-		padding-top: 20vh;
-		overflow: hidden;
-		position: relative;
-	}
+.body {
+	min-height: 100vh;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	background: #ffd9ad;
+	background: -webkit-linear-gradient(159deg, #d6eaff, #ffd9ad);
+	background: linear-gradient(159deg, #d6eaff,  #ffd9ad);
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding-top: 20vh;
+	overflow: hidden;
+	position: relative;
+}
 
 /* 裝飾品區 */
-	.decoration {
-		position: absolute;
-		pointer-events: none;
-		border-radius: 50%;
-		z-index: 1;
-		filter: blur(40px);
-		opacity: 0.4;
-		animation: float 8s infinite alternate ease-in-out;
-	}
+.decoration {
+	position: absolute;
+	pointer-events: none;
+	border-radius: 50%;
+	z-index: 1;
+	filter: blur(40px);
+	opacity: 0.4;
+	animation: float 8s infinite alternate ease-in-out;
+}
 
-	.decor-1 {
-		width: 350px;
-		height: 350px;
-		background: var(--primary-orange);
-		top: -100px;
-		left: -50px;
-	}
+.decor-1 {
+	width: 350px;
+	height: 350px;
+	background: var(--secondary-blue);
+	top: -100px;
+	left: -50px;
+}
 
-	.decor-2 {
-		width: 300px;
-		height: 300px;
-		background: var(--secondary-blue);
-		bottom: -50px;
-		right: -50px;
-		animation-delay: -2s;
-	}
+.decor-2 {
+	width: 300px;
+	height: 300px;
+	background: var(--primary-orange);
+	bottom: -50px;
+	right: -50px;
+	animation-delay: -2s;
+}
 
-	/* 兩顆球飄動效果 */
-	@keyframes float {
-		0% { transform: translate(0, 0) rotate(0deg); }
-		100% { transform: translate(40px, 60px) rotate(10deg); }
-	}
+/* 兩顆球飄動效果 */
+@keyframes float {
+	0% { transform: translate(0, 0) rotate(0deg); }
+	100% { transform: translate(40px, 60px) rotate(10deg); }
+}
 
-	.main-box {
-    background: rgba(255, 255, 255, 0.65);
-		backdrop-filter: blur(10px);
-		border: 1px solid rgba(255, 255, 255, 0.8);
-		box-shadow: 
-			0 4px 15px rgba(0, 0, 0, 0.05),
-			inset 0 0 2px rgba(255, 255, 255, 0.5);
-		height: auto;
-		border-radius: 20px;
-		z-index: 100;
-		width: 85%;
-		max-width: 400px;
-		display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px 40px;
-		margin-top: -8vh;
-	}
+.main-box {
+		background: rgba(255, 255, 255, 0.65);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.8);
+	box-shadow: 
+		0 4px 15px rgba(0, 0, 0, 0.05),
+		inset 0 0 2px rgba(255, 255, 255, 0.5);
+	height: auto;
+	border-radius: 20px;
+	z-index: 100;
+	width: 85%;
+	max-width: 400px;
+	display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 50px 40px;
+	margin-top: -8vh;
+}
 
-	.login-header {
-		margin-bottom: 30px;
-		text-align: center;
-	}
+.login-header {
+	margin-bottom: 30px;
+	text-align: center;
+}
 
-	.title {
-		color: var(--primary-orange);
-  	font-size: 2.2rem;
-		font-weight: 800;
-		margin: 0;
-		letter-spacing: -1px;
-	}
+.title {
+	color: var(--primary-orange);
+		font-size: 2.2rem;
+	font-weight: 800;
+	margin: 0;
+	letter-spacing: -1px;
+}
 
-	.subtitle {
-		font-size: 0.9rem;
-		color: #888;
-		font-weight: 500;
-		display: block;
-		margin-top: -5px;
-		letter-spacing: 3px;
-	}
+.subtitle {
+	font-size: 0.9rem;
+	color: #888;
+	font-weight: 500;
+	display: block;
+	margin-top: -5px;
+	letter-spacing: 3px;
+}
 
 
-	.user, .pwd {
-    font-size: 0.95rem;
-    color: #555;
-    font-weight: 600;
-	 	text-align: left;
-    align-self: flex-start;
-    padding-left: 10px;
-		letter-spacing: 2px;
-		margin: 15px 0 8px 0;
-	}
+.user, .pwd {
+	font-size: 0.95rem;
+	color: #555;
+	font-weight: 600;
+	text-align: left;
+	align-self: flex-start;
+	padding-left: 10px;
+	letter-spacing: 2px;
+	margin: 15px 0 8px 0;
+}
 
-	.user-input, .pwd-input {
-		width: 240px;
-		height: 40px;
-	}
+.user-input, .pwd-input {
+	width: 240px;
+	height: 40px;
+}
 
-	.el-input {
-    --el-input-border-radius: 10px;
-    margin-bottom: 5px;
-	}
+.el-input {
+		--el-input-border-radius: 10px;
+		margin-bottom: 5px;
+}
 
-	.login-btn {
-		margin-top: 10px;
-  	background: linear-gradient(135deg, #ff9d2f, #ff6b00);
-  	box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
-		margin-bottom: 15px;
-		border: none;
-    width: 140px;
-    height: 35px;
-    font-weight: bold;
-		font-size: 1.1em;
-    cursor: pointer;
-    transition: transform 0.1s;
-	}
+.login-btn {
+	margin-top: 10px;
+	background: linear-gradient(135deg, #ff9d2f, #ff6b00);
+	box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+	margin-bottom: 15px;
+	border: none;
+	width: 140px;
+	height: 35px;
+	font-weight: bold;
+	font-size: 1.1em;
+	cursor: pointer;
+	transition: transform 0.1s;
+}
 
-	.login-btn:active {
-    transform: scale(0.95);
-	}
+.login-btn:active {
+		transform: scale(0.95);
+}
 
-	.footer-info {
-		position: absolute;
-		font-size: 12px;
-		color: #666;
-		bottom: 20px;
-		left: 50%;
-		transform: translateX(-50%);
-	}
+.footer-info {
+	position: absolute;
+	font-size: 12px;
+	color: #666;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+}
 
-	.err-msg {
-		margin-top: 30px;
-		height: 30px;
-	}
+.err-msg {
+	margin-top: 30px;
+	height: 30px;
+}
 
 </style>
