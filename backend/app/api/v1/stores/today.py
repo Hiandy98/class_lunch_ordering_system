@@ -8,7 +8,7 @@ from sqlmodel import select, col
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database.session import get_session
 from app.database.models import Store
-from app.schema.v1.stores.list import AllStore
+from app.schema.v1.stores.today import AllStore
 
 router = APIRouter()
 
