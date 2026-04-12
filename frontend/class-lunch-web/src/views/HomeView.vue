@@ -47,7 +47,7 @@
 			
 		} catch (error) {
 			if (!axios.isAxiosError(error)) {
-				return
+				return;
 			}
 			if (!error.response) {
 				if (error.request) {

@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import StoreView from '@/views/StoresView.vue'
+import MenuView from '@/views/MenuView.vue'
+import AccountView from '@/views/AccountView.vue'
+import OrdersView from '@/views/OrdersView.vue'
+import CreateView from '@/views/CreateView.vue'
 import axios from 'axios'
 
 const router = createRouter({
@@ -21,6 +25,30 @@ const router = createRouter({
       path: "/stores",
       name: "stores",
       component: StoreView,
+      //meta: { requiresAuth: true },
+    },
+    {
+      path: "/menu",
+      name: "menu",
+      component: MenuView,
+      //meta: { requiresAuth: true },
+    },
+    {
+      path: "/user",
+      name: "user",
+      component: AccountView,
+      //meta: { requiresAuth: true },
+    },
+    {
+      path: "/order",
+      name: "order",
+      component: OrdersView,
+      //meta: { requiresAuth: true },
+    },
+    {
+      path: "/create",
+      name: "create",
+      component: CreateView,
       //meta: { requiresAuth: true },
     },
   ],
