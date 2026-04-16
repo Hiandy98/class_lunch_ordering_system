@@ -32,7 +32,7 @@
     position: fixed;
     top: 40px;
     left: 30px;
-    z-index: 100;
+    z-index: 1000;
     display: flex;
     align-items: center;
     padding: 6px 12px 6px 8px;

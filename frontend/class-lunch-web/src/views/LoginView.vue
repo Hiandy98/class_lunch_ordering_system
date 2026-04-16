@@ -188,7 +188,7 @@
 }
 
 .main-box {
-		background: rgba(255, 255, 255, 0.65);
+	background: rgba(255, 255, 255, 0.65);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
 	border: 1px solid rgba(255, 255, 255, 0.8);
@@ -201,9 +201,9 @@
 	width: 85%;
 	max-width: 400px;
 	display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: 50px 40px;
+	flex-direction: column;
+	align-items: center;
+	padding: 50px 40px;
 	margin-top: -8vh;
 }
 
