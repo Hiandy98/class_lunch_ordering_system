@@ -14,7 +14,6 @@ from app.schema.v1.stores.update import Update
 
 router = APIRouter()
 
-
 @router.patch("/{store_id}/update", status_code=status.HTTP_200_OK)
 async def update_store_data(
     store_id: UUID,
@@ -26,7 +25,7 @@ async def update_store_data(
     target_store = result.scalar_one_or_none()
     
     if not target_store:
-        raise HTTPException(status_code=404, detail="找不到該餐廳")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="找不到該餐廳")
     
     update_data = payload.model_dump(exclude_unset=True)
     
