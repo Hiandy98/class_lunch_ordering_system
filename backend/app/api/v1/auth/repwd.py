@@ -14,7 +14,7 @@ from app.core.password import safe_verify_password, safe_create_password
 
 router = APIRouter()
 
-router.patch("/update", status_code=status.HTTP_200_OK)
+@router.patch("/repwd", status_code=status.HTTP_200_OK)
 async def repwd(
     payload: Update,
     user: dict = Depends(verify_token),

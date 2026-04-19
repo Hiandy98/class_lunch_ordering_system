@@ -13,7 +13,7 @@ from app.api.v1.auth.verify_token import verify_token
 
 router = APIRouter()
 
-router.patch("/update", status_code=status.HTTP_200_OK)
+@router.patch("/rename", status_code=status.HTTP_200_OK)
 async def rename(
     new_name: Update,
     user: dict = Depends(verify_token),
