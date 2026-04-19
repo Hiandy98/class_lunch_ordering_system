@@ -73,10 +73,9 @@
 					<div class="card-content">
 						<div class="info-section">
 							<div class="card-header">
-								<h3>{{ item.name }}</h3>
-								<span class="status-badge" :class="item.is_active ? 'active' : 'closed'">
-									{{ item.is_active ? 'OPEN' : 'CLOSE' }}
-								</span>
+								<h3 :class="item.is_active ? 'status-open' : 'status-closed'">
+									{{ item.name }}
+								</h3>
 							</div>
 						
 							<div class="card-body">
@@ -218,9 +217,6 @@
 	position: relative;
 }
 
-
-
-/* 裝飾品區 */
 .decoration {
 	position: fixed;
 	pointer-events: none;
@@ -248,7 +244,6 @@
 	animation-delay: -2s;
 }
 
-/* 兩顆球飄動效果 */
 @keyframes float {
 	0% { transform: translate(0, 0) rotate(0deg); }
 	100% { transform: translate(40px, 60px) rotate(10deg); }
@@ -329,23 +324,6 @@
 	font-size: 1.5rem;
 	font-weight: 700;
 	letter-spacing: 1px;
-}
-
-.status-badge {
-	padding: 4px 10px;
-	border-radius: 12px;
-	font-size: 0.75rem;
-	font-weight: bold;
-}
-
-.status-badge.active {
-	background: #e4ffee;
-	color: #2ecc71;
-}
-
-.status-badge.closed {
-	background: #ffeaea;
-	color: #e74c3c;
 }
 
 .deadline {
@@ -453,35 +431,35 @@
 }
 
 .fab-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 25px;
-    width: 60px;
-    height: 60px;
-    background-color: var(--primary-orange);
-    color: white;
-    border-radius: 20px;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 10px 25px rgba(255, 138, 0, 0.4);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	position: fixed;
+	bottom: 30px;
+	right: 25px;
+	width: 60px;
+	height: 60px;
+	background-color: var(--primary-orange);
+	color: white;
+	border-radius: 20px;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	z-index: 1000;
+	box-shadow: 0 10px 25px rgba(255, 138, 0, 0.4);
+	transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .fab-btn:active {
-    transform: scale(0.85);
-    background-color: #e67e00;
-    box-shadow: 0 5px 15px rgba(255, 138, 0, 0.3);
+	transform: scale(0.85);
+	background-color: #e67e00;
+	box-shadow: 0 5px 15px rgba(255, 138, 0, 0.3);
 }
 
 .fab-btn svg {
-    width: 28px;
-    height: 28px;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+	width: 28px;
+	height: 28px;
+	stroke-linecap: round;
+	stroke-linejoin: round;
 }
 
 .footer-info {
@@ -491,6 +469,34 @@
 	bottom: 20px;
 	left: 50%;
 	transform: translateX(-50%);
+}
+
+.card-header h3 {
+    margin: 0;
+    color: #444;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.card-header h3::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 30px;
+    border-radius: 5px;
+    margin-right: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.status-open::before {
+    background-color: #2ecc71;
+}
+
+.status-closed::before {
+    background-color: #e74c3c;
 }
 
 </style>

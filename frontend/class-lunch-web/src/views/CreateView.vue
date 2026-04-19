@@ -1,5 +1,4 @@
 <template>
-	<BackButton />
 	<div class="body">
 		<div class="decoration decor-1"></div>
 		<div class="decoration decor-2"></div>
@@ -7,6 +6,7 @@
 			<BackButton />
 			<div class="logo">LunchBox</div>
 		</div>
+		<div class="footer-info">V0.0 Beta</div>
 	</div>
 </template>
 
@@ -34,9 +34,6 @@ console.log(store_id);
 	position: relative;
 }
 
-
-
-/* 裝飾品區 */
 .decoration {
 	position: fixed;
 	pointer-events: none;
@@ -64,9 +61,39 @@ console.log(store_id);
 	animation-delay: -2s;
 }
 
-/* 兩顆球飄動效果 */
 @keyframes float {
 	0% { transform: translate(0, 0) rotate(0deg); }
 	100% { transform: translate(40px, 60px) rotate(10deg); }
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 20px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	z-index: 200;
+}
+
+.logo {
+	color: var(--primary-orange);
+	font-size: 2rem;
+	font-weight: 900;
+	margin-top: 20px;
+	margin-left: 100px;
+	z-index: 101;
+	letter-spacing: -1px;
+	text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.footer-info {
+	position: absolute;
+	font-size: 12px;
+	color: #666;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
 }
 </style>

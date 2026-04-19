@@ -1,19 +1,21 @@
 <template>
-	<BackButton />
 	<div class="body">
 		<div class="decoration decor-1"></div>
 		<div class="decoration decor-2"></div>
+		<div class="header">
+			<BackButton />
+			<div class="logo">LunchBox</div>
+		</div>
+		<div class="user-card">
+			
+		</div>
+		<div class="footer-info">V0.0 Beta</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 import BackButton from '@/components/BackButton.vue'
-import { useRoute } from 'vue-router';
-const route = useRoute();
 
-const store_id = route.query.id;
-console.log(route.query.name);
-console.log(store_id);
 </script>
 
 <style scoped>
@@ -29,7 +31,6 @@ console.log(store_id);
 	overflow-x: hidden;
 	position: relative;
 }
-
 
 .decoration {
 	position: fixed;
@@ -58,9 +59,61 @@ console.log(store_id);
 	animation-delay: -2s;
 }
 
-/* 兩顆球飄動效果 */
 @keyframes float {
 	0% { transform: translate(0, 0) rotate(0deg); }
 	100% { transform: translate(40px, 60px) rotate(10deg); }
 }
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 20px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	z-index: 200;
+}
+
+.logo {
+	color: var(--primary-orange);
+	font-size: 2rem;
+	font-weight: 900;
+	margin-top: 20px;
+	margin-left: 100px;
+	z-index: 101;
+	letter-spacing: -1px;
+	text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.footer-info {
+	position: absolute;
+	font-size: 12px;
+	color: #666;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.user-card  {
+	background: rgba(255, 255, 255, 0.65);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.8);
+	box-shadow: 
+		0 4px 15px rgba(0, 0, 0, 0.05),
+		inset 0 0 2px rgba(255, 255, 255, 0.5);
+	height: 70vh;
+	border-radius: 20px;
+	z-index: 2;
+	width: 85%;
+	max-width: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 15vh;
+	padding: 50px 40px;
+}
+
+
 </style>
