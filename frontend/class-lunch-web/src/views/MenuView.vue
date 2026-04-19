@@ -55,7 +55,7 @@
 				<template #header>
 					<div class="card-header">
 						<span>餐點清單，總計 {{ total_price }} 元</span>
-						<el-button type="primary" size="small" circle @click="addRow" :loading="isLoaaing" >
+						<el-button type="primary" size="small" circle @click="addRow">
 							<el-icon><Plus /></el-icon>
 						</el-button>
 					</div>
@@ -84,7 +84,7 @@
 				</div>
 
 				<div class="action-bar">
-					<el-button type="primary" class="submit-btn" @click="submitAll">
+					<el-button type="primary" class="submit-btn" @click="submitAll" :loading="isLoaaing">
 						送出 {{ foodList.length }} 個項目
 					</el-button>
 				</div>
@@ -149,7 +149,7 @@ const submitAll = async () => {
   }
   console.log('準備送出的資料：', validData);
 	const payload = {
-			store_id: store_id,            // 從 route.query 取得的 ID
+			store_id: store_id,
 			total_price: total_price.value,
 			is_active: true,
 			content: validData.map(item => ({

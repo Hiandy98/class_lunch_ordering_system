@@ -31,8 +31,6 @@ console.log(store_id);
 }
 
 
-
-/* 裝飾品區 */
 .decoration {
 	position: fixed;
 	pointer-events: none;

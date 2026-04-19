@@ -3,6 +3,10 @@
 	<div class="body">
 		<div class="decoration decor-1"></div>
 		<div class="decoration decor-2"></div>
+		<div class="header">
+			<BackButton />
+			<div class="logo">LunchBox</div>
+		</div>
 	</div>
 </template>
 
