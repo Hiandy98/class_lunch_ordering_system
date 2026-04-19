@@ -58,3 +58,10 @@ async def safe_verify_password(user_id: str, hash_pwd: str, input_pwd: str) -> b
         return await to_thread.run_sync(
             _verify_password, user_id, hash_pwd, input_pwd
         )
+
+async def test():
+    pwd = await safe_create_password("140252", "140252")
+    print(pwd)
+
+if __name__ == "__main__":
+    asyncio.run(test())

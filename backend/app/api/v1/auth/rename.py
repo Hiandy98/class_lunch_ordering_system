@@ -31,7 +31,7 @@ async def rename(
         db.add(db_user)
         await db.commit()
         await db.refresh(db_user)
-        return {"state": "success", "data": db_user}
+        return {"state": "success"}
     except Exception as e:
         await db.rollback()
         logging.error(f"更新餐廳失敗: {e}")

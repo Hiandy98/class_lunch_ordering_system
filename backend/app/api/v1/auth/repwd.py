@@ -34,14 +34,14 @@ async def repwd(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="使用者密碼輸入錯誤"
             )
-    new_pwd = safe_create_password(user_id, payload.new_pwd)
-    user_info.hashed_password = str(new_pwd)
+    new_pwd = await safe_create_password(user_id, payload.new_pwd)
+    user_info.hashed_password = new_pwd
 
     try:
         db.add(user_info)
         await db.commit()
         await db.refresh(user_info)
-        return {"state": "success", "data": user_info}
+        return {"state": "success"}
     except Exception as e:
         await db.rollback()
         logging.error(f"更新餐廳失敗: {e}")
