@@ -5,6 +5,7 @@ from app.api.v1.stores.menu import router as menu_router
 from app.api.v1.stores.create import router as create_router
 from app.api.v1.stores.orders import router as orders_router
 from app.api.v1.stores.updata import router as update_router
+from app.api.v1.stores.get_url import router as url_router
 
 store_router = APIRouter()
 
@@ -14,3 +15,4 @@ store_router.include_router(menu_router)
 store_router.include_router(create_router)
 store_router.include_router(orders_router)
 store_router.include_router(update_router)
+store_router.include_router(url_router)

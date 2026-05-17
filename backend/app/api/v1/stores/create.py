@@ -17,7 +17,6 @@ async def create_store(payload: StoreCreate,
     logging.debug("新增餐廳操作")
     new_store = Store(
         name=payload.name,
-        menu_url=payload.menu_url
     )
 
     try:

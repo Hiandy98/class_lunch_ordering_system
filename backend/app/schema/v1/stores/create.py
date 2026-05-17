@@ -1,12 +1,12 @@
 from pydantic import BaseModel, ConfigDict
-from typing import List
+from uuid import UUID
 
 
 class StoreCreate(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     name: str
-    menu_url: List[str]
 
 class Create(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     name: str
-    menu_url: list[str]
+    id: UUID
