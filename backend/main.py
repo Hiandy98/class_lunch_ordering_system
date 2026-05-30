@@ -29,11 +29,14 @@ async def start_up():
     logging.info("Hello from class-lunch-ordering-system V0.0-Beta")
 
 
+from app.core.scheduler import start_scheduler, shutdown_scheduler
 # 防止啟動後跟不上伺服器 在uvicorn控制中啟動起始運行函式
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await start_up()
+    start_scheduler()
     yield
+    shutdown_scheduler()
 
 
 # FastAPI 設定區域
