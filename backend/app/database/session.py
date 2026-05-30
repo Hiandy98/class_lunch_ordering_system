@@ -1,11 +1,12 @@
 import os
 import sys
 import logging
+import socket
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
-from sqlalchemy.exc import OperationalError, ProgrammingError # 記得匯入這兩個
+from sqlalchemy.exc import OperationalError, ProgrammingError
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -42,10 +43,25 @@ async def connect_check():
     在 main.py 啟動時呼叫： await connect_check()
     """
     try:
-        async with engine.connect() as conn:
-            await conn.execute(text("SELECT 1"))  # 執行最簡單的測試指令
+        async with engine.begin() as conn:
+            result = await conn.execute(text("SELECT 1"))
+            # 確保資料確實讀取完畢
+            result.scalar()
             logging.info("Supabase 非同步資料庫連線測試成功")
     except OperationalError as e:
+        underlying_err = getattr(e, "orig", None)
+        
+        if underlying_err:
+            err_msg = str(underlying_err).lower()
+            
+            if isinstance(underlying_err, socket.gaierror) or "getaddrinfo failed" in err_msg:
+                logging.critical("Supabase錯誤: 找不到資料庫主機 請檢查 Supabase 後台專案是否被 暫停 或 URL 填寫錯誤")
+                sys.exit(1)
+
+            if isinstance(underlying_err, (OSError, socket.error, TimeoutError)) or "connection refused" in err_msg or "timed out" in err_msg:
+                logging.critical("Supabase錯誤: 連線被拒絕或超時 資料庫伺服器可能未開啟 正在重啟中 或專案已被暫停")
+                sys.exit(1)
+                
         logging.critical(f"無法連線（網路、密碼或連線數已滿）: {e}")
         sys.exit(1)
     except ProgrammingError as e:
