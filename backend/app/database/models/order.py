@@ -23,3 +23,4 @@ class Order(SQLModel, table=True):
         default=None,
         sa_column_kwargs={"server_default": text("now()")}
     )
+    is_locked: bool = Field(default=False)
