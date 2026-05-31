@@ -12,7 +12,7 @@ log_params = LoggerParameter(
     Name: class_lunch_ordering_system
     Goal: 一個班級的訂餐系統 在此輸出後端運行日誌
     """,
-    logging_level="DEBUG",
+    logging_level="INFO",
     do_session_log=True,
     do_console_log=True,
     do_master_log=False,
