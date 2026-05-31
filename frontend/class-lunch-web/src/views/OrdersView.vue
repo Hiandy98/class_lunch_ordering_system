@@ -74,8 +74,8 @@ import { Delete } from '@element-plus/icons-vue'
 import axios from 'axios';
 
 const route = useRoute();
+const store_id = route.query.id as string;
 
-const store_id = route.query.id;
 console.log(route.query.name);
 console.log(store_id);
 
@@ -104,9 +104,13 @@ interface Orders {
 	is_active: boolean;
 }
 
-const userInfo = ref<UserInfo | null>(null);
-const allOrders = ref<Orders[]>([]);
-const myOrders = ref<MyOrders[]>([]);
+const cachedUser = localStorage.getItem('lunchbox_user');
+const cachedAllOrders = store_id ? localStorage.getItem(`lunchbox_all_orders_${store_id}`) : null;
+const cachedMyOrders = store_id ? localStorage.getItem(`lunchbox_my_orders_${store_id}`) : null;
+
+const userInfo = ref<UserInfo | null>(cachedUser ? JSON.parse(cachedUser) : null);
+const allOrders = ref<Orders[]>(cachedAllOrders ? JSON.parse(cachedAllOrders) : []);
+const myOrders = ref<MyOrders[]>(cachedMyOrders ? JSON.parse(cachedMyOrders) : []);
 const isLoaaing = ref(false);
 
 const total_price = computed(() => {
@@ -117,26 +121,36 @@ const verifyUser = async () => {
 	try {
 		const response = await axios.get('/api/v1/auth/verify');
 		userInfo.value = response.data;
+		localStorage.setItem('lunchbox_user', JSON.stringify(response.data));
 	} catch (error) {
 		if (!axios.isAxiosError(error)) {
 			return;
 		}
 		console.error('驗證失敗或 Token 已過期');
+		userInfo.value = null;
+		localStorage.removeItem('lunchbox_user');
 	}
 }
 
 const getAllOrder = async () => {
+	if (!store_id) return;
 	try {
 		const response = await axios.get(`/api/v1/store/${store_id}/orders`);
-		allOrders.value = response.data.filter((order: Orders) => order.is_active === true);
-
-		myOrders.value = allOrders.value
-			.filter(order => order.student_id === userInfo.value?.user_id)
-			.map(order => ({
+		const filteredAllOrders = response.data.filter((order: Orders) => order.is_active === true);
+		
+		const mappedMyOrders = filteredAllOrders
+			.filter((order: Orders) => order.student_id === userInfo.value?.user_id)
+			.map((order: Orders) => ({
 				id: order.id,
 				name: order.content.map(item => item.name).join(', '),
 				price: order.total_price 
 			}));
+
+		allOrders.value = filteredAllOrders;
+		myOrders.value = mappedMyOrders;
+		
+		localStorage.setItem(`lunchbox_all_orders_${store_id}`, JSON.stringify(filteredAllOrders));
+		localStorage.setItem(`lunchbox_my_orders_${store_id}`, JSON.stringify(mappedMyOrders));
 
 	} catch(error) {
 		if (!axios.isAxiosError(error)) {
@@ -175,11 +189,10 @@ const removeOrder = async (index: number) => {
 			}
 		});
 		if (response.status === 200) {
-      console.log('訂單建立成功：', response.data);
+      console.log('訂單取消成功：', response.data);
       alert('已取消訂單！');
 			await getAllOrder();
     }
-		myOrders.value.splice(index, 1);
 	} catch(error) {
 		if (!axios.isAxiosError(error)) {
 				return
@@ -200,6 +213,9 @@ const removeOrder = async (index: number) => {
 			switch (status) {
 				case 401:
 					alert(detail || '帳號或密碼錯誤');
+					break;
+				case 400:
+					alert(detail || '已截單，無法操作');
 					break;
 				case 502:
 					alert('伺服器維護中 (502)，請稍後再試');

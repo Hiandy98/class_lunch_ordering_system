@@ -181,19 +181,33 @@
 		}
 	}
 	
-	const goToMenu = (item: Store) => {
-		if (!item.is_active) {
-			alert('商店未開放')
-			return;
+	const isStoreClosed = (store: Store): boolean => {
+		if (!store.is_active) return true;
+		if (store.deadline) {
+			const now = new Date();
+			const deadlineTime = new Date(store.deadline);
+			if (deadlineTime <= now) return true;
 		}
-		router.push({
-			path: '/menu',
-			query: {
-				id: item.id,
-				name: item.name
-			}
-		});
+		return false;
 	};
+
+
+	const goToMenu = (item: Store) => {
+  if (isStoreClosed(item)) {
+    router.push({
+      path: '/order',
+      query: { id: item.id }
+    });
+  } else {
+    router.push({
+      path: '/menu',
+      query: {
+        id: item.id,
+        name: item.name
+      }
+    });
+  }
+};
 
 	const goToAccount = () => {
 		router.push('/user');
