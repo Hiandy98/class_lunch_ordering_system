@@ -7,6 +7,8 @@ import axios from 'axios'
 import App from './App.vue'
 import router from './router'
 
+axios.defaults.withCredentials = true
+
 if (import.meta.env.PROD) {
   // 正式環境
   axios.defaults.baseURL = 'https://class-lunch-ordering-system.onrender.com'
