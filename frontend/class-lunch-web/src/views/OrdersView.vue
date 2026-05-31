@@ -49,7 +49,7 @@
 						</thead>
 						<tbody>
 							<tr v-for="(order, idx) in allOrders" :key="idx">
-								<td>{{ Number(order.student_id) - 140251 }}</td>
+								<td>{{ Number(order.student_id) - 140252 }}</td>
 								<td>
 									<div v-for="(item, i) in order.content" :key="i">
 										{{ item.name }}
