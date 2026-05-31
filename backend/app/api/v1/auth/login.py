@@ -58,7 +58,7 @@ async def login(response: Response, remember_me: bool = False, user_account: Use
         value=token,
         httponly=True,
         max_age=cookies_age,
-        samesite="lax",
+        samesite="none",
         secure=True
     )
 
