@@ -7,7 +7,7 @@ async def logout(response: Response):
     response.delete_cookie(
         key="access_token",
         httponly=True,
-        samesite="lax",
-        secure=False
+        samesite="none",
+        secure=True
     )
     return {"state": "success"}
