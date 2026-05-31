@@ -11,7 +11,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // https://vite.dev
 export default defineConfig(({ mode }) => {
   return {
-    base: mode === 'production' ? '/Class-lunch-ordering-system/' : '/',
+    base: mode === 'production' ? '/class_lunch_ordering_system/' : '/',
     
     plugins: [
       vue(),
