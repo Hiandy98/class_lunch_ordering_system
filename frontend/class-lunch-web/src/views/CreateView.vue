@@ -9,7 +9,11 @@
 		</div>
 
 		<div class="content-container">
-			<div class="store-grid">
+			<div v-if="is_loading && stores.length === 0" class="global-loading">
+				<span>載入中...</span>
+			</div>
+
+			<div v-else class="store-grid">
 				<div 
 					v-for="store in stores" 
 					:key="store.id" 
@@ -56,7 +60,6 @@
 						/>
 					</div>
 
-				
 					<div class="input-item">
 						<p class="section-label">上傳菜單圖片 (可多張):</p>
 						<el-upload
@@ -71,13 +74,11 @@
 						</el-upload>
 					</div>
 
-
 				</div>
 				<el-button class="action-btn" :loading="is_loading" @click="handleCreateStore">
 					確認建立餐廳
 				</el-button>
 			</div>
-
 
 			<div v-else-if="drawer_mode === 'manage' && selected_store" class="drawer-body">
 				<div class="info-section">
@@ -116,7 +117,7 @@
 						<div class="menu-images-grid">
 							<div v-for="(url, idx) in edit_form.menu_urls" :key="idx" class="menu-img-wrapper">
 								<img :src="url" class="menu-thumb" />
-								<el-button type="danger" size="small" circle @click="removeMenuImage(idx)">x</el-button>
+								<el-button type="danger" size="small" circle @click="removeMenuImage(idx)">X</el-button>
 							</div>
 						</div>
 						<el-upload
@@ -152,12 +153,13 @@
 	</div>
 </template>
 
+
 <script setup lang="ts">
 import BackButton from '@/components/BackButton.vue'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { Plus } from '@element-plus/icons-vue'
-import { ElMessage, } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import type { UploadUserFile, UploadFile } from 'element-plus';
 
 interface BackendStoreResponse {
@@ -178,8 +180,9 @@ interface Store {
 	menu_url: string[];
 }
 
+const cachedStores = localStorage.getItem('lunchbox_admin_stores');
 
-const stores = ref<Store[]>([]);
+const stores = ref<Store[]>(cachedStores ? JSON.parse(cachedStores) : []);
 const is_loading = ref<boolean>(false);
 const is_drawer_open = ref<boolean>(false);
 const drawer_mode = ref<'create' | 'manage'>('create');
@@ -189,7 +192,6 @@ const selected_store = ref<Store | null>(null);
 const uploaded_file_list = ref<UploadUserFile[]>([]);
 const menu_url_strings = ref<string[]>([]);
 
-
 const edit_form = ref({
 	name: '',
 	is_active: true,
@@ -198,14 +200,12 @@ const edit_form = ref({
 	menu_urls: [] as string[]
 });
 
-
 const handleRemoveUploadedFile = (uploadFile: UploadFile) => {
 	const targetUrl = (uploadFile.response as { url?: string } | undefined)?.url;
 	if (targetUrl) {
 		menu_url_strings.value = menu_url_strings.value.filter(url => url !== targetUrl);
 	}
 };
-
 
 const fetchStores = async () => {
 	try {
@@ -219,7 +219,7 @@ const fetchStores = async () => {
 		const allStores = allStoresRes.data;
 		const todayStores = todayStoresRes.data;
 
-		stores.value = allStores.map((store: BackendStoreResponse) => {
+		const mappedStores = allStores.map((store: BackendStoreResponse) => {
 			const todayMatch = todayStores.find((t: BackendStoreResponse) => t.id === store.id);
 			
 			return {
@@ -231,6 +231,10 @@ const fetchStores = async () => {
 				menu_url: store.menu_url || [],
 			};
 		});
+
+		stores.value = mappedStores;
+		localStorage.setItem('lunchbox_admin_stores', JSON.stringify(mappedStores));
+
 	} catch (error) {
 		console.error('獲取餐廳清單失敗:', error);
 		ElMessage.error('無法取得餐廳列表資料');
@@ -297,6 +301,8 @@ const removeMenuImage = async (index: number) => {
   });
   edit_form.value.menu_urls = newUrls;
   ElMessage.success('已刪除圖片');
+	
+	updateSingleStoreCache(selected_store.value.id, { menu_url: newUrls });
 };
 
 const handleAddMenuImage = async (file: UploadFile) => {
@@ -316,12 +322,13 @@ const handleAddMenuImage = async (file: UploadFile) => {
     
     edit_form.value.menu_urls = res.data;
     ElMessage.success('圖片已新增');
+
+		updateSingleStoreCache(selected_store.value.id, { menu_url: res.data });
   } catch (error) {
     console.error('圖片上傳失敗:', error);
     ElMessage.error('圖片上傳失敗');
   }
 };
-
 
 const handleCreateStore = async () => {
   const name = new_store_name.value.trim();
@@ -362,7 +369,7 @@ const handleCreateStore = async () => {
     ElMessage.success('餐廳建立完成');
     uploaded_file_list.value = [];
     is_drawer_open.value = false;
-    await fetchStores();
+    await fetchStores(); // 5. 建立成功後，fetchStores 會自動覆寫整份最新的快取
 
   } catch (error) {
     console.error('建立餐廳失敗:', error);
@@ -419,6 +426,22 @@ const handleUpdateStoreData = async () => {
 		ElMessage.error('更新失敗，請檢查內容格式');
 	} finally {
 		is_loading.value = false;
+	}
+};
+
+
+const updateSingleStoreCache = (storeId: string, updatedFields: Partial<Store>) => {
+	const currentCache = localStorage.getItem('lunchbox_admin_stores');
+	if (!currentCache) return;
+	try {
+		const parsedStores = JSON.parse(currentCache) as Store[];
+		const index = parsedStores.findIndex(s => s.id === storeId);
+		if (index !== -1) {
+			parsedStores[index] = { ...parsedStores[index], ...updatedFields } as Store;
+			localStorage.setItem('lunchbox_admin_stores', JSON.stringify(parsedStores));
+		}
+	} catch (e) {
+		console.error('更新單一餐廳快取失敗', e);
 	}
 };
 
