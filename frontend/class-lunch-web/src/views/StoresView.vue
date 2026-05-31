@@ -92,8 +92,8 @@
 						</div>
         	</div>
 				</button>
-			<div v-if="isLoading" class="empty-state">載入中...</div>
-			<div v-else-if="todayStore.length === 0" class="empty-state">目前沒有開放中的餐廳</div>
+			<div v-if="isLoading && todayStore.length === 0" class="empty-state">載入中...</div>
+			<div v-else-if="!isLoading && todayStore.length === 0" class="empty-state">目前沒有開放中的餐廳</div>
 			</div>
 		</div>
 		<button class="fab-btn" @click="goToCreateStore()">
@@ -126,19 +126,25 @@
 		role: string;
 	}
 
-	const userInfo = ref<UserInfo | null>(null);
-	const todayStore = ref<Store[]>([]);
+	const cachedUser = localStorage.getItem('lunchbox_user');
+	const cachedStores = localStorage.getItem('lunchbox_today_stores');
+
+	const userInfo = ref<UserInfo | null>(cachedUser ? JSON.parse(cachedUser) : null);
+	const todayStore = ref<Store[]>(cachedStores ? JSON.parse(cachedStores) : []);
 	const isLoading = ref(true);
 	
 	async function verifyUser() {
 		try {
 			const response = await axios.get('/api/v1/auth/verify');
 			userInfo.value = response.data;
+			localStorage.setItem('lunchbox_user', JSON.stringify(response.data));
 		} catch (error) {
 			if (!axios.isAxiosError(error)) {
 				return;
 			}
 			console.error('驗證失敗或 Token 已過期');
+			userInfo.value = null;
+			localStorage.removeItem('lunchbox_user');
 		}
 	}
 
@@ -147,6 +153,7 @@
 		try {
 			const response = await axios.get('/api/v1/store/list/today');
 			todayStore.value = response.data;
+			localStorage.setItem('lunchbox_today_stores', JSON.stringify(response.data));
 		} catch (error: unknown) {
 			if (!axios.isAxiosError(error)) {
 				return;
