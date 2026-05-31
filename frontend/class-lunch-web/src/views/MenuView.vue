@@ -185,6 +185,9 @@ const submitAll = async () => {
 				case 401:
 					alert(detail || '帳號或密碼錯誤');
 					break;
+				case 400:
+					alert(detail || "該餐廳已關閉");
+					break;
 				case 502:
 					alert('伺服器維護中 (502)，請稍後再試');
 					break;
