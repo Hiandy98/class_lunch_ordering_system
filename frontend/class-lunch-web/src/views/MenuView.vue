@@ -21,7 +21,12 @@
 		<div class="store-name">{{ store_name }}</div>
 
 		<div class="carousel-wrapper">
+			<div v-if="menuImages.length === 0" class="carousel-empty-placeholder">
+				<span>菜單載入中...</span>
+			</div>
+			
       <el-carousel
+				v-else
         height="40vh"
         :autoplay="false"
         arrow="always"
@@ -103,12 +108,8 @@ import axios from 'axios';
 import router from '@/router';
 import { Plus, Delete } from '@element-plus/icons-vue';
 
-
 const route = useRoute();
-
-const store_id = route.query.id;
-console.log();
-console.log(store_id);
+const store_id = route.query.id as string;
 
 interface UserInfo {
 	user_id: string;
@@ -145,6 +146,7 @@ const submitAll = async () => {
   if (validData.length === 0) {
     console.log("至少填寫一個項目");
 		alert("至少填寫一個項目")
+		isLoaaing.value = false;
     return;
   }
   console.log('準備送出的資料：', validData);
@@ -199,9 +201,12 @@ const submitAll = async () => {
 	}
 };
 
+const cachedUser = localStorage.getItem('lunchbox_user');
+const cachedMenu = store_id ? localStorage.getItem(`lunchbox_menu_${store_id}`) : null;
 
-const userInfo = ref<UserInfo | null>(null);
+const userInfo = ref<UserInfo | null>(cachedUser ? JSON.parse(cachedUser) : null);
 const store_name = ref<string>(route.query.name as string);
+const menuImages = ref<string[]>(cachedMenu ? JSON.parse(cachedMenu) : []);
 
 function handleGoTo() {
 	router.push({
@@ -223,21 +228,23 @@ async function verifyUser() {
 	try {
 		const response = await axios.get('/api/v1/auth/verify');
 		userInfo.value = response.data;
+		localStorage.setItem('lunchbox_user', JSON.stringify(response.data));
 	} catch (error) {
 		if (!axios.isAxiosError(error)) {
 			return;
 		}
 		console.error('驗證失敗或 Token 已過期');
+		userInfo.value = null;
+		localStorage.removeItem('lunchbox_user');
 	}
 }
 
-// const url = "https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/765613b6cc3545bd812f3f117bcb285a~noop.jpeg?biz_tag=pcweb_cover&card_type=303&column_n=0&from=327834062&lk3s=138a59ce&s=PackSourceEnum_SEARCH&se=false&x-expires=1776330000&x-signature=nFHgKHtnkrNb%2FvHvWpZ%2Fh4pOPB0%3D"
-const menuImages = ref<string[]>([]);
-
 async function fetchMenu() {
+	if (!store_id) return;
 	try {
 		const response = await axios.get(`/api/v1/store/${store_id}/menu`);
 		menuImages.value = response.data.menu_url;
+		localStorage.setItem(`lunchbox_menu_${store_id}`, JSON.stringify(response.data.menu_url));
 	} catch (error: unknown) {
 		if (!axios.isAxiosError(error)) {
 			return;
@@ -267,7 +274,6 @@ onMounted(() => {
 	verifyUser();
 	fetchMenu();
 })
-
 </script>
 
 <style scoped>
