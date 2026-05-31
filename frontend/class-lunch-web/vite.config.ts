@@ -8,11 +8,10 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
-// https://vite.dev/config/
-export default defineConfig(({ command }) => {
+// https://vite.dev
+export default defineConfig(({ mode }) => {
   return {
-    // 打包正式環境時，使用 GitHub 倉庫名稱作為基底路徑，防止網頁全白
-    base: command === 'build' ? '/Class-lunch-ordering-system/' : '/',
+    base: mode === 'production' ? '/Class-lunch-ordering-system/' : '/',
     
     plugins: [
       vue(),
@@ -31,7 +30,6 @@ export default defineConfig(({ command }) => {
     },
     server: {
       proxy: {
-        // 開發環境跑本地
         '/api': {
           target: 'http://127.0.0.1:8080',
           changeOrigin: true,
