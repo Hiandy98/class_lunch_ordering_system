@@ -10,15 +10,15 @@ tz_taiwan = timezone('Asia/Taipei')
 scheduler = AsyncIOScheduler(timezone=tz_taiwan)
 
 async def keep_backend_awake():
-    """定時自我喚醒（僅限每日 07:30 ~ 14:00 台灣時間）"""
-    now_taiwan = datetime.now()
+    """定時自我喚醒(每日 07:30 ~ 14:00 台灣時間)"""
+    now_taiwan = datetime.now(tz_taiwan)
     current_time = now_taiwan.time()
     
     start_awake = time(7, 30, 0)
     end_awake = time(14, 0, 0)
     
     if not (start_awake <= current_time <= end_awake):
-        logging.info(f"[Scheduler] 目前台灣時間 {current_time.strftime('%H:%M')} 處於休眠時段，不執行喚醒。")
+        logging.info(f"[Scheduler] Current Taiwan time {current_time.strftime('%H:%M')} is in sleeping hours. Skip ping.")
         return
 
     url = "https://class-lunch-ordering-system.onrender.com"
@@ -26,11 +26,11 @@ async def keep_backend_awake():
         async with httpx.AsyncClient() as client:
             response = await client.get(url, timeout=10.0)
             if response.status_code == 200:
-                logging.info(f"[Scheduler] 台灣時間 {now_taiwan.strftime('%H:%M')} 成功自我喚醒，網站持續在線。")
+                logging.info(f"[Scheduler] Taiwan time {now_taiwan.strftime('%H:%M')} self-ping success. Server stays alive.")
             else:
-                logging.warning(f"[Scheduler] 自我喚醒異常，狀態碼: {response.status_code}")
+                logging.warning(f"[Scheduler] Self-ping returned abnormal status: {response.status_code}")
     except Exception as e:
-        logging.error(f"[Scheduler] 自我喚醒連線失敗: {e}")
+        logging.error(f"[Scheduler] Self-ping connection failed: {e}")
 
 def start_scheduler():
     current_time_with_tz = datetime.now(tz_taiwan)
