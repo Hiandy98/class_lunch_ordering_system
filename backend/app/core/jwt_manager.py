@@ -4,7 +4,7 @@ import sys
 import logging
 from datetime import datetime, timezone, timedelta
 from dotenv import load_dotenv
-from fastapi import HTTPException, status, Cookie
+from fastapi import HTTPException, status, Cookie, Header
 
 load_dotenv()
 JWT_KEY = os.getenv("JWT_KEY")
@@ -26,8 +26,13 @@ def create_access_token(user_id: str, display_name: str, role: str ,expires_delt
     }
     return jwt.encode(payload, JWT_KEY, algorithm=ALGORITHM)
 
-def decode_jwt(access_token: str = Cookie(None)):
-    if not access_token:
+def decode_jwt(access_token: str = Cookie(None), authorization: str = Header(None)):
+    token = access_token
+
+    if not token and authorization and authorization.startswith("Bearer "):
+        token = authorization.split(" ")
+    
+    if not token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="請重新登入，目前無憑證或已過期"
