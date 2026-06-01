@@ -27,6 +27,9 @@ def create_access_token(user_id: str, display_name: str, role: str ,expires_delt
     return jwt.encode(payload, JWT_KEY, algorithm=ALGORITHM)
 
 def decode_jwt(access_token: str = Cookie(None), authorization: str = Header(None)):
+    logging.info(f"====== 收到 Cookie: {access_token} ======")
+    logging.info(f"====== 收到 Header: {authorization} ======")
+    
     token = access_token
 
     if not token and authorization and authorization.startswith("Bearer "):
