@@ -99,6 +99,14 @@
 
 
 			if (response.data.state === '登入成功') {
+				
+				const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+						(navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+				
+				if (isIOSDevice && response.data.token) {
+					localStorage.setItem('ios_token', response.data.token)
+				}
+
 				router.push('/stores');
 			}
 
