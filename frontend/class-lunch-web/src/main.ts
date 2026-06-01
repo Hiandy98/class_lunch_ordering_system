@@ -8,14 +8,7 @@ import App from './App.vue'
 import router from './router'
 
 axios.defaults.withCredentials = true
-
-if (import.meta.env.PROD) {
-  // 正式環境
-  axios.defaults.baseURL = 'https://class-lunch-ordering-system.onrender.com'
-} else {
-  // 開發環境
-  axios.defaults.baseURL = ''
-}
+axios.defaults.baseURL = 'https://class-lunch-ordering-system.onrender.com'
 
 const isIOS = () => {
   return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
