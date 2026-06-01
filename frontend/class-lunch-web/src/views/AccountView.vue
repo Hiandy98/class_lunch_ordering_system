@@ -207,7 +207,7 @@ const handleLogout = async () => {
 		console.error('登出失敗:', error);
 		ElMessage.error('無法連線至伺服器，登出失敗');
 	} finally {
-		localStorage.removeItem('ios_token');
+		localStorage.removeItem('user_token');
 		localStorage.removeItem('lunchbox_user');
 		document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=None; Secure";
 		loading.value = false;

@@ -10,23 +10,19 @@ import router from './router'
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'https://class-lunch-ordering-system.onrender.com'
 
-const isIOS = () => {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-}
-// IOS的處理 我討厭IOS!!!!!!
+// 我討厭IOS!!!!....
 axios.interceptors.request.use((config) => {
-  if (isIOS()) {
-    const iosToken = localStorage.getItem('ios_token')
-    if (iosToken) {
-      config.headers.Authorization = `Bearer ${iosToken}`
-    }
+  const token = localStorage.getItem('user_token')
+  
+  if (token) {
+    config.withCredentials = false
+    config.headers.Authorization = `Bearer ${token}`
   }
+  
   return config
 }, (error) => {
   return Promise.reject(error)
 })
-
 
 const app = createApp(App)
 
