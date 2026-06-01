@@ -63,6 +63,7 @@ async def login(response: Response, remember_me: bool = False, user_account: Use
     )
 
     return {
-        "state": "登入成功"
+        "state": "登入成功",
+        "token": token
     }
 

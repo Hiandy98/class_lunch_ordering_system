@@ -6,7 +6,7 @@ router = APIRouter()
 async def logout(response: Response):
     response.delete_cookie(
         key="access_token",
-        httponly=True,
+        httponly=False,
         samesite="none",
         secure=True
     )
