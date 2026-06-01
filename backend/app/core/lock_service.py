@@ -8,7 +8,6 @@ from app.database.models.order import Order
 from app.core.notify import send_discord_notification
 
 
-# TODO: 訂單送出的攔截部分
 async def lock_expired_stores_and_orders():
     """
     每分鐘執行一次：
