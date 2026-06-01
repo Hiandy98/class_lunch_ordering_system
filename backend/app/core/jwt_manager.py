@@ -30,7 +30,7 @@ def decode_jwt(access_token: str = Cookie(None), authorization: str = Header(Non
     token = access_token
 
     if not token and authorization and authorization.startswith("Bearer "):
-        token = authorization.split(" ")
+        token = authorization.split(" ")[1]
     
     if not token:
         raise HTTPException(
@@ -38,7 +38,7 @@ def decode_jwt(access_token: str = Cookie(None), authorization: str = Header(Non
             detail="請重新登入，目前無憑證或已過期"
         )
     try:
-        payload = jwt.decode(access_token, JWT_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, JWT_KEY, algorithms=[ALGORITHM])
         
         user_id = payload.get("sub")
         display_name = payload.get("name")
