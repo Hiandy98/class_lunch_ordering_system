@@ -56,7 +56,7 @@ async def login(response: Response, remember_me: bool = False, user_account: Use
     response.set_cookie(
         key="access_token",
         value=token,
-        httponly=True,
+        httponly=False,
         max_age=cookies_age,
         samesite="none",
         secure=True
